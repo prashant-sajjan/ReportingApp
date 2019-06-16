@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+
+  <title>Summary Report</title>
+</head>
+
+<body>
+	<section>
+		<div class="card bg-light">
+    		<div class="card-header font-weight-bold">Search Tests</div>
+    		<div class="row" style="margin-top:16px; margin-bottom:16px">
+			  <div class="col-sm-1">
+			  	<label for="test_id" class="col-form-label">Enter Test ID</label>
+			  </div>
+			  <div class="col-sm-3">
+			  	<input type="text" class="form-control" id="test_id">
+			  </div>
+			  <div class="col-sm-4">
+			  	<button type="submit" id="btnSearch" class="btn btn-primary mb-2">Get Data</button>
+			  </div>
+			</div>
+    	</div>
+		
+	</section>
+  {{#testObject}}
+  <div class="card bg-light">
+    <div class="card-header font-weight-bold" style="text-align:center;background-color:gray">Automation Summary Report</div>
+  </div>
+
+  <div class="card bg-light">
+    <div class="card-header font-weight-bold">Execution Details</div>
+    <div class="card-body" style="padding:0">
+      <div class="container-fluid">
+      {{#summaryHeaders}}
+      <div class="row">
+        <div class="col-sm-3" style="background-color:#212529;color:white;font-weight:500">
+          {{label}}
+        </div>
+        <div class="col-sm-9" style="background-color:gray;color:black;font-weight:500">
+          {{{value}}}
+        </div>
+      </div>
+      {{/summaryHeaders}}
+    </div>
+  </div>
+</div>
+
+<div class="card bg-light" id="test-results">
+  {{>TestResult}}
+</div>
+  {{/testObject}}
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+     <script src="https://code.jquery.com/jquery-3.1.1.min.js">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+    
+    <script>
+    	$('#btnSearch').click(function() {
+    		var testId = $('#test_id').val();
+  			$.get("/reporting/searchReport",{id:testId}, function(data){
+  			$('#test-results').html(data);
+        });
+		});
+    </script>
+</body>
+
+</html>
